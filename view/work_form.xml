@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@name='invoiced_progress']"
+        position="before">
+        <page name="revenue_moves">
+            <field name="revenue_moves" colspan="4"/>
+        </page>
+    </xpath>
+
+    <xpath expr="/form/notebook/page/field[@name='invoiced_amount']" position="after">
+      <label name="revenue_merited"/>
+      <field name="revenue_merited"/>
+      <label name="revenue_pending_merited"/>
+      <field name="revenue_pending_merited"/>
+    </xpath> 
+</data>

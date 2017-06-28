@@ -1,0 +1,76 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:project.certification:"
+msgid ""
+"Unable to cancel current certification since the account move %(move)s "
+"is already reconciliated"
+msgstr ""
+"No es pot cancelar la certificació actual degut a que el assentament "
+"%(move)s té línies conciliades."
+
+msgctxt "field:account.move.line,work:"
+msgid "Work"
+msgstr "Treball"
+
+msgctxt "field:certification.configuration,pending_invoice_account:"
+msgid "Pending Invoice Account"
+msgstr "Compte factures pendents"
+
+msgctxt "field:certification.configuration-company.company,company:"
+msgid "Company"
+msgstr "Empresa"
+
+msgctxt "field:certification.configuration-company.company,create_date:"
+msgid "Create Date"
+msgstr "Data de creació"
+
+msgctxt "field:certification.configuration-company.company,create_uid:"
+msgid "Create User"
+msgstr "Usuari de creació"
+
+msgctxt "field:certification.configuration-company.company,id:"
+msgid "ID"
+msgstr "Identificador"
+
+msgctxt ""
+"field:certification.configuration-company.company,pending_invoice_account:"
+msgid "Pending Invoice Account"
+msgstr "Compte factures pendents"
+
+msgctxt "field:certification.configuration-company.company,rec_name:"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "field:certification.configuration-company.company,write_date:"
+msgid "Write Date"
+msgstr "Usuari creació"
+
+msgctxt "field:certification.configuration-company.company,write_uid:"
+msgid "Write User"
+msgstr "Usuari modificació"
+
+msgctxt "field:project.certification,account_move:"
+msgid "Account Move"
+msgstr "Assentament comptable"
+
+msgctxt "field:project.work,revenue_merited:"
+msgid "Revenue (M)"
+msgstr "Ingressos (M)"
+
+msgctxt "field:project.work,revenue_moves:"
+msgid "Move Lines"
+msgstr "Apunts"
+
+msgctxt "field:project.work,revenue_pending_merited:"
+msgid "Revenue Pending (M)"
+msgstr "Ingressos Pendents (M)"
+
+msgctxt "model:certification.configuration-company.company,name:"
+msgid "Certification Configuration per Company"
+msgstr ""
+
+msgctxt "model:ir.action,name:act_project_moves"
+msgid "Moves"
+msgstr "Moviments"
