@@ -185,6 +185,15 @@ class CertificationLine:
     __name__ = 'project.certification.line'
     __metaclass__ = PoolMeta
 
+    @classmethod
+    def __setup__(cls):
+        super(CertificationLine, cls).__setup__()
+
+        cls._error_messages.update({
+                'no_pending_invoice_account': ('No pending invoice account'
+                    'configured. Check Project/Configuration/Certification'),
+                })
+
     def check_acount_stock_move(self):
         pool = Pool()
         Config = pool.get('certification.configuration')
