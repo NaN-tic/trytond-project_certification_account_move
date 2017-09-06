@@ -295,7 +295,7 @@ class CertificationLine:
             pending_line.work = self.work
 
             if pending_line.account.party_required:
-                pending_line.party = self.party
+                pending_line.party = self.certification.work.party
 
             pending_line.credit = invoiced_amount
             pending_line.debit = _ZERO
@@ -338,7 +338,8 @@ class InvoiceMilestone:
 
     @classmethod
     def do_invoice(cls, milestones):
-        for milestone in milestones:
+        for milestone in [x for x in milestones
+                if x.invoice_method == 'remainder']:
             milestone._check_certifications()
         super(InvoiceMilestone, cls).do_invoice(milestones)
 
@@ -383,8 +384,7 @@ class InvoiceMilestone:
         credit = sum(l.credit for l in previous_moves)
         debit = sum(l.debit for l in previous_moves)
 
-        amount_to_invoice = (self.project.list_price * Decimal(
-            self.invoice_percent)).quantize(Decimal('.01'))
+        amount_to_invoice = self.project.list_price
 
         # Amount left to invoice after reconciling the certifications
         # amount_to_invoice = amount_to_invoice - (
