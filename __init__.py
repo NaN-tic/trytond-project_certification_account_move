@@ -2,13 +2,13 @@
 # copyright notices and license terms.
 from trytond.pool import Pool
 from . import work
-from configuration import *
+from . import configuration
 
 
 def register():
     Pool.register(
-        Configuration,
-        ConfigurationCompany,
+        configuration.Configuration,
+        configuration.ConfigurationCompany,
         work.Move,
         work.MoveLine,
         work.Certification,
