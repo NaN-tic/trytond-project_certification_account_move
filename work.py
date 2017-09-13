@@ -56,13 +56,13 @@ class Work:
 
         for work in works:
 
-            merited = sum(l.debit - l.credit
+            merited = sum(l.credit - l.debit
                 for l in work.revenue_moves
                 if not l.reconciliation)
 
             res['revenue_pending_merited'][work.id] = (
                 Decimal(work.certified_pending_quantity) * work.revenue
-                ).quantize(Decimal('.01'))
+                ).quantize(Decimal('.001'))
 
             res['revenue_merited'][work.id] = merited
         return res
