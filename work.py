@@ -227,7 +227,7 @@ class CertificationLine:
     def _get_accounting_journal(self):
         pool = Pool()
         Journal = pool.get('account.journal')
-        journals = Journal.search([('type', '=', 'expense')], limit=1)
+        journals = Journal.search([('type', '=', 'revenue')], limit=1)
         if journals:
             journal, = journals
         else:
@@ -263,7 +263,7 @@ class CertificationLine:
         else:
             invoiced_amount = unposted_amount
 
-        invoice_account = self.work.product_goods.account_expense_used
+        invoice_account = self.work.product_goods.account_revenue_used
 
         if invoiced_amount != _ZERO:
 
@@ -274,8 +274,8 @@ class CertificationLine:
             if invoiced_line.account.party_required:
                 invoiced_line.party = self.work.party
 
-            invoiced_line.debit = invoiced_amount
-            invoiced_line.credit = _ZERO
+            invoiced_line.credit = invoiced_amount
+            invoiced_line.debit = _ZERO
 
             self._set_analytic_lines(invoiced_line)
 
@@ -288,8 +288,8 @@ class CertificationLine:
             if pending_line.account.party_required:
                 pending_line.party = self.certification.work.party
 
-            pending_line.credit = invoiced_amount
-            pending_line.debit = _ZERO
+            pending_line.debit = invoiced_amount
+            pending_line.credit = _ZERO
 
             move_lines.append(pending_line)
 
@@ -374,15 +374,14 @@ class InvoiceMilestone:
         previous_moves = self._get_previous_move() or False
         credit = sum(l.credit for l in previous_moves)
         debit = sum(l.debit for l in previous_moves)
-
         amount_to_invoice = self.project.list_price
 
         # Amount left to invoice after reconciling the certifications
         # amount_to_invoice = amount_to_invoice - (
         #    self.project.list_price * self.project.percent_progress_amount)
-        amount_to_invoice -= abs(credit)
+        amount_to_invoice -= abs(credit-debit)
         # Total amount to reconcile
-        amount_to_reconcile = abs(credit)
+        amount_to_reconcile = abs(credit-debit)
 
         # Create reconciliations
         pending_invoice = MoveLine()
@@ -391,11 +390,11 @@ class InvoiceMilestone:
             pending_invoice.party = self.project.party
 
         if amount_to_reconcile > _ZERO:
-            pending_invoice.debit = amount_to_reconcile
-            pending_invoice.credit = _ZERO
-        else:
-            pending_invoice.credit = abs(amount_to_reconcile)
+            pending_invoice.credit = amount_to_reconcile
             pending_invoice.debit = _ZERO
+        else:
+            pending_invoice.debit = abs(amount_to_reconcile)
+            pending_invoice.credit = _ZERO
 
         counter_invoice = MoveLine()
         counter_invoice.account = invoice_account
@@ -404,14 +403,15 @@ class InvoiceMilestone:
             counter_invoice.party = self.project.party
 
         if amount_to_reconcile > _ZERO:
-            counter_invoice.debit = _ZERO
-            counter_invoice.credit = amount_to_reconcile
-        else:
             counter_invoice.credit = _ZERO
-            counter_invoice.debit = abs(amount_to_reconcile)
+            counter_invoice.debit = amount_to_reconcile
+        else:
+            counter_invoice.debit = _ZERO
+            counter_invoice.credit = abs(amount_to_reconcile)
 
         period_id = Period.find(self.project.company.id, date=date.today())
         # TODO: Should ask description?
+
         move = Move(
             origin=self.project,
             period=period_id,
@@ -421,21 +421,8 @@ class InvoiceMilestone:
             )
         move.save()
         Move.post([move])
-        # TODO: Check WTF is going on in the line below
-        # Everything left to reconcile
         to_reconcile = previous_moves + [list(move.lines)[1]]  # WTF
-
-        credit = sum(l.credit for l in to_reconcile)
-        debit = sum(l.debit for l in to_reconcile)
-
         MoveLine.reconcile(to_reconcile)
-
-        # Create a move with the reamning part after the reconciliation
-        if amount_to_invoice != _ZERO:
-            remaing = self._create_remaning(amount_to_invoice, period_id,
-                config.pending_invoice_account, invoice_account)
-            remaing.save()
-            Move.post([remaing])
 
     def _get_accounting_journal(self):
         pool = Pool()
@@ -449,13 +436,12 @@ class InvoiceMilestone:
 
     def _get_previous_move(self):
         pool = Pool()
-        MoveLine = pool.get('account.move.line')
         Config = pool.get('certification.configuration')
         config = Config(1)
 
-        return MoveLine.search([('origin', '=', str(self.project)),
-            ('account', '=', config.pending_invoice_account),
-            ('reconciliation', '=', None)], limit=1)
+        m = [x for x in self.project.revenue_moves
+             if x.account == config.pending_invoice_account]
+        return m
 
     def _create_remaning(self, amount, period, config_account, invoice_acc):
         pool = Pool()
