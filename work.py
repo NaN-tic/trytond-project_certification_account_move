@@ -430,8 +430,9 @@ class InvoiceMilestone:
             )
         move.save()
         Move.post([move])
-        to_reconcile = previous_moves + [list(move.lines)[1]]  # WTF
-        MoveLine.reconcile(to_reconcile)
+        if previous_moves:
+            to_reconcile = previous_moves + [list(move.lines)[1]]  # WTF
+            MoveLine.reconcile(to_reconcile)
 
     def _get_accounting_journal(self):
         pool = Pool()
