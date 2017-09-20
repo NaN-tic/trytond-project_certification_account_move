@@ -371,7 +371,7 @@ class InvoiceMilestone:
         invoice_account = self.project.product_goods.account_expense_used
 
         # Previous move with the remaning amount from last invoice
-        previous_moves = self._get_previous_move() or False
+        previous_moves = self._get_previous_move() or []
         credit = sum(l.credit for l in previous_moves)
         debit = sum(l.debit for l in previous_moves)
         amount_to_invoice = self.project.list_price
@@ -421,8 +421,9 @@ class InvoiceMilestone:
             )
         move.save()
         Move.post([move])
-        to_reconcile = previous_moves + [list(move.lines)[1]]  # WTF
-        MoveLine.reconcile(to_reconcile)
+        if previous_moves:
+            to_reconcile = previous_moves + [list(move.lines)[1]]  # WTF
+            MoveLine.reconcile(to_reconcile)
 
     def _get_accounting_journal(self):
         pool = Pool()
