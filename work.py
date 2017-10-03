@@ -1,5 +1,6 @@
 from trytond.model import fields, Workflow
 from trytond.pool import Pool, PoolMeta
+from trytond.transaction import Transaction
 from decimal import Decimal
 from datetime import date
 
@@ -194,12 +195,13 @@ class CertificationLine:
         if not config.pending_invoice_account:
             self.raise_user_error('no_pending_invoice_account')
 
-        account_move = self._get_project_account_move(
-            config.pending_invoice_account)
-        if account_move:
-            account_move.save()
-            Move.post([account_move])
-            return account_move
+        with Transaction().set_user(0):
+            account_move = self._get_project_account_move(
+                config.pending_invoice_account)
+            if account_move:
+                account_move.save()
+                Move.post([account_move])
+                return account_move
 
     def _get_project_account_move(self, pending_invoice_account):
         "Return the account move for the current project"
