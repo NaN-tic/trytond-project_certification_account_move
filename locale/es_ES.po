@@ -2,13 +2,17 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:project.certification:"
-msgid ""
-"Unable to cancel current certification since the account move %(move)s\ 
-"is already reconciliated"
+msgctxt "error:project.certification.line:"
+msgid "Missing Pending Invoice Account in Certification Configuration"
 msgstr ""
-"No se puede cancelar la certificación actual debido a que el assetamiento "
-"%(move)s tiene líneas conciliadas."
+"No se encuentra la cuenta factura pendientes en la configuración de "
+"certificados."
+
+msgctxt "error:project.certification:"
+msgid "Missing Pending Invoice Account in Certification Configuration"
+msgstr ""
+"No se encuentra la cuenta factura pendientes en la configuración de "
+"certificados."
 
 msgctxt "field:account.move.line,work:"
 msgid "Work"
@@ -32,7 +36,7 @@ msgstr "Usuario de creación"
 
 msgctxt "field:certification.configuration-company.company,id:"
 msgid "ID"
-msgstr "Identificador"
+msgstr "ID"
 
 msgctxt ""
 "field:certification.configuration-company.company,pending_invoice_account:"
@@ -45,11 +49,11 @@ msgstr "Nombre"
 
 msgctxt "field:certification.configuration-company.company,write_date:"
 msgid "Write Date"
-msgstr "Fecha modificación"
+msgstr "Fecha de modificación"
 
 msgctxt "field:certification.configuration-company.company,write_uid:"
 msgid "Write User"
-msgstr "Usuario modificación"
+msgstr "Usuario de modificación"
 
 msgctxt "field:project.certification,account_move:"
 msgid "Account Move"
@@ -69,7 +73,7 @@ msgstr "Ingresos Pendientes (M)"
 
 msgctxt "model:certification.configuration-company.company,name:"
 msgid "Certification Configuration per Company"
-msgstr ""
+msgstr "Configuración certificación por empresa"
 
 msgctxt "model:ir.action,name:act_project_moves"
 msgid "Moves"
