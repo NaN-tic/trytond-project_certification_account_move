@@ -79,6 +79,9 @@ class Certification:
     def __setup__(cls):
         super(Certification, cls).__setup__()
         cls._error_messages.update({
+                'reconciliated_account': ('Unable to cancel current '
+                    'certification since the account move %(move)s '
+                    'is already reconciliated'),
                 'no_pending_invoice_account': ('Missing Pending Invoice Account '
                     'in Certification Configuration'),
                 })
