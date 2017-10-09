@@ -78,11 +78,12 @@ class Certification:
     @classmethod
     def __setup__(cls):
         super(Certification, cls).__setup__()
-
         cls._error_messages.update({
                 'reconciliated_account': ('Unable to cancel current '
                     'certification since the account move %(move)s '
                     'is already reconciliated'),
+                'no_pending_invoice_account': ('Missing Pending Invoice Account '
+                    'in Certification Configuration'),
                 })
 
     @classmethod
@@ -189,10 +190,9 @@ class CertificationLine:
     @classmethod
     def __setup__(cls):
         super(CertificationLine, cls).__setup__()
-
         cls._error_messages.update({
-                'no_pending_invoice_account': ('No pending invoice account'
-                    'configured. Check Project/Configuration/Certification'),
+                'no_pending_invoice_account': ('Missing Pending Invoice Account '
+                    'in Certification Configuration'),
                 })
 
     def check_acount_stock_move(self):
