@@ -354,12 +354,6 @@ class InvoiceMilestone:
 
         Then we calculate 2 values:
 
-        amount_to_invoice: Is the amount that will be left after reconciling
-        the certifications as well as the amount that was remaning from the
-        previous invoicing of a milestone (we will get to this later)
-
-            amount_to_invoice = (TOTAL * invoice_percent) - debit
-
         amount_to_reconcile: Amount that we have to reconcile. This amount
         contains the not reconciliated certifications as well as what was
         remaining from the previous time we invoiced a milestone. This
@@ -379,20 +373,17 @@ class InvoiceMilestone:
         Config = pool.get('certification.configuration')
         config = Config(1)
 
-        invoice_account = self.project.product_goods.account_expense_used
+        invoice_account = self.project.product_goods.account_revenue_used
 
         # Previous move with the remaning amount from last invoice
         previous_moves = self._get_previous_move() or []
         credit = sum(l.credit for l in previous_moves)
         debit = sum(l.debit for l in previous_moves)
-        amount_to_invoice = self.project.list_price
 
-        # Amount left to invoice after reconciling the certifications
-        # amount_to_invoice = amount_to_invoice - (
-        #    self.project.list_price * self.project.percent_progress_amount)
-        amount_to_invoice -= abs(credit-debit)
         # Total amount to reconcile
-        amount_to_reconcile = abs(credit-debit)
+        amount_to_reconcile = Decimal(abs(credit-debit))
+        if amount_to_reconcile == _ZERO:
+            return
 
         # Create reconciliations
         pending_invoice = MoveLine()
