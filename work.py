@@ -37,7 +37,7 @@ class Work:
     revenue_merited = fields.Function(fields.Numeric('Revenue (M)'),
         'get_merited_amountsl')
     revenue_pending_merited = fields.Function(
-        fields.Numeric('Revenue Pending (M)'), 'get_merited_amountsl')
+        fields.Numeric('Certification Pending Revenues'),'get_merited_amountsl')
 
     @classmethod
     def _get_revenue_merited(cls, works, names):

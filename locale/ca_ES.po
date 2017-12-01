@@ -12,6 +12,12 @@ msgid "Missing Pending Invoice Account in Certification Configuration"
 msgstr ""
 "No es troba el compte factures pendents a la configuració de certificats."
 
+msgctxt "error:project.certification:"
+msgid ""
+"Unable to cancel current certification since the account move %(move)s is "
+"already reconciliated"
+msgstr ""
+
 msgctxt "field:account.move.line,work:"
 msgid "Work"
 msgstr "Treball"
@@ -67,7 +73,7 @@ msgstr "Apunts"
 
 msgctxt "field:project.work,revenue_pending_merited:"
 msgid "Revenue Pending (M)"
-msgstr "Ingressos Pendents (M)"
+msgstr "Ing. pdts. de certificar"
 
 msgctxt "model:certification.configuration-company.company,name:"
 msgid "Certification Configuration per Company"
@@ -76,3 +82,11 @@ msgstr "Configuració certificació per empresa"
 msgctxt "model:ir.action,name:act_project_moves"
 msgid "Moves"
 msgstr "Moviments"
+
+#, fuzzy
+msgctxt "selection:project.invoice_milestone,invoice_state:"
+msgid ""
+msgstr ""
+"-        DISPLAY CABINA :\n"
+"\n"
+"Se integrará en la botonera de cabina una pantalla digital (DISPLAY)  para así mantener informado al usuario en todo momento en la planta que se encuentra el ascensor. Y mediante flechas en la misma pantalla indicará al cliente el sentido de marcha actual que tiene el ascensor."
