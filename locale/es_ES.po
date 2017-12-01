@@ -73,8 +73,9 @@ msgctxt "field:project.work,revenue_moves:"
 msgid "Move Lines"
 msgstr "Apuntes"
 
+#, fuzzy
 msgctxt "field:project.work,revenue_pending_merited:"
-msgid "Revenue Pending (M)"
+msgid "Certification Pending Revenues"
 msgstr "Ing. Ptes. Certificar"
 
 msgctxt "model:certification.configuration-company.company,name:"
