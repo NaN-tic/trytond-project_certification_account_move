@@ -32,7 +32,6 @@ class MoveLine:
 class Work:
     __name__ = 'project.work'
     __metaclass__ = PoolMeta
-
     revenue_moves = fields.One2Many('account.move.line', 'work', 'Move Lines')
     revenue_merited = fields.Function(fields.Numeric('Revenue (M)'),
         'get_merited_amountsl')
@@ -72,7 +71,6 @@ class Work:
 class Certification:
     __name__ = 'project.certification'
     __metaclass__ = PoolMeta
-
     account_move = fields.Many2One('account.move', 'Account Move')
 
     @classmethod
@@ -87,7 +85,6 @@ class Certification:
                 })
 
     @classmethod
-    @Workflow.transition('confirmed')
     def confirm(cls, certifications):
         super(Certification, cls).confirm(certifications)
 
